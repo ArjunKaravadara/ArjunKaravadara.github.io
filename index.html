@@ -475,6 +475,25 @@
     .stat + .stat { border-left: 1px solid var(--line); padding-left: 48px; }
     .stat strong { font-size: clamp(3rem, 5vw, 5rem); line-height: .85; letter-spacing: -.07em; }
     .stat span { max-width: 230px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .about-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 76px; }
+    .about-stats .stat span { max-width: 200px; }
+
+    /* Cursor spotlight — soft orange glow that follows the pointer
+       (JS-driven; only enabled for fine pointers without reduced motion) */
+    .cursor-spotlight {
+      position: fixed;
+      z-index: 40;
+      left: 0;
+      top: 0;
+      width: 560px;
+      height: 560px;
+      margin: -280px 0 0 -280px;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle, rgba(242, 86, 35, .16) 0%, rgba(242, 86, 35, .07) 38%, rgba(242, 86, 35, 0) 68%);
+      will-change: transform, opacity;
+    }
 
     /* Work */
     .work-section { padding-bottom: 150px; }
@@ -1373,6 +1392,35 @@
       .social-icons { margin-top: 8px; }
     }
 
+    /* Portrait phones: the hero becomes a 16:9 landscape frame — the same
+       composition as desktop (photo right, copy left, same gradient),
+       scaled to fit the phone width like a landscape video. Nothing is
+       stacked and the 16:9 photo is shown whole, never portrait-cropped.
+       Sizes are in vw so the whole lockup scales with the frame. */
+    @media (max-width: 720px) and (orientation: portrait) {
+      .hero { min-height: 0; height: 56.25vw; }
+      .hero-media::before {
+        background: linear-gradient(90deg,
+          #f25623 0%,
+          #f25623 25%,
+          rgba(242,86,35,.99) 34%,
+          rgba(242,86,35,.93) 43%,
+          rgba(242,86,35,.76) 52%,
+          rgba(242,86,35,.49) 61%,
+          rgba(242,86,35,.23) 70%,
+          rgba(242,86,35,.07) 79%,
+          rgba(242,86,35,0) 88%);
+      }
+      .hero-inner { width: min(var(--max), calc(100% - 7.2vw)); min-height: 0; padding: 12.5vw 0 2vw; }
+      .hero-copy { width: 66vw; max-width: none; }
+      .hello { font-size: 2.7vw; min-height: 6vw; padding: 1.4vw 2.8vw; gap: 1.6vw; }
+      .hero-lockup { margin-top: 2.2vw; }
+      .hero-title { font-size: 8.6vw; line-height: 1.08; letter-spacing: -.08em; }
+      .hero-script { font-size: 8.3vw; line-height: 1.18; margin-left: 36%; }
+      .hero-kicker-mask { margin-top: calc(2vw - .62em); }
+      .hero-kicker { font-size: 2.35vw; line-height: 1.4; max-width: 100%; padding: 1.7vw 2.8vw; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0ms !important; }
@@ -1396,6 +1444,7 @@
   </style>
 </head>
 <body>
+  <div class="cursor-spotlight" id="cursor-spotlight" aria-hidden="true"></div>
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader-name"><span class="preloader-word">Arjun</span><span class="preloader-dots"><i></i><i></i><i></i></span><span class="preloader-word">Karavadara</span></div>
   </div>
@@ -1598,6 +1647,11 @@
             <p>I like owning the whole process: shaping the visual direction, building the interaction, refining the 3D motion, and solving the practical details that make an experience feel finished.</p>
             <span class="signature script">Arjun Karavadara.</span>
           </div>
+        </div>
+        <div class="stats about-stats reveal">
+          <div class="stat"><strong data-count-to="4">4</strong><span>Agencies worked with</span></div>
+          <div class="stat"><strong data-count-to="8">8</strong><span>Videos in Video Work</span></div>
+          <div class="stat"><strong data-count-to="3">3</strong><span>Featured projects</span></div>
         </div>
       </div>
     </section>
@@ -2537,6 +2591,71 @@
       if (document.readyState === 'complete') dismiss();
       else window.addEventListener('load', dismiss, { once: true });
       window.setTimeout(dismiss, 900);
+    }());
+  </script>
+  <script>
+    /* Cursor spotlight + magnetic buttons.
+       Fine pointers only; fully disabled for reduced motion and touch. */
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+      if (reduced.matches || !finePointer.matches) return;
+
+      var spot = document.getElementById('cursor-spotlight');
+      if (spot) {
+        var tx = window.innerWidth / 2, ty = window.innerHeight / 2;
+        var x = tx, y = ty, spotShown = false, spotRaf = 0;
+        function spotLoop() {
+          x += (tx - x) * 0.12;
+          y += (ty - y) * 0.12;
+          spot.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+          if (Math.abs(tx - x) > 0.4 || Math.abs(ty - y) > 0.4) spotRaf = window.requestAnimationFrame(spotLoop);
+          else spotRaf = 0;
+        }
+        function kickSpot() { if (!spotRaf) spotRaf = window.requestAnimationFrame(spotLoop); }
+        window.addEventListener('pointermove', function (event) {
+          if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+          tx = event.clientX;
+          ty = event.clientY;
+          if (!spotShown) {
+            spotShown = true;
+            x = tx;
+            y = ty;
+            spot.style.transition = 'opacity .5s ease';
+            spot.style.opacity = '1';
+          }
+          kickSpot();
+        }, { passive: true });
+        document.addEventListener('mouseleave', function () {
+          spotShown = false;
+          spot.style.opacity = '0';
+        });
+      }
+
+      var STRENGTH = 0.28, MAX_SHIFT = 7;
+      var targets = document.querySelectorAll('.nav-brand, .nav-links a, .project-link, .whatsapp-cta, .icon-link, .social-handle, .video-close, .project-audio, .physics-reset');
+      Array.prototype.forEach.call(targets, function (el) {
+        var resetTimer = 0;
+        el.addEventListener('pointerenter', function () { window.clearTimeout(resetTimer); });
+        el.addEventListener('pointermove', function (event) {
+          var rect = el.getBoundingClientRect();
+          if (!rect.width) return;
+          var dx = (event.clientX - (rect.left + rect.width / 2)) * STRENGTH;
+          var dy = (event.clientY - (rect.top + rect.height / 2)) * STRENGTH;
+          dx = Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, dx));
+          dy = Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, dy));
+          el.style.transition = 'transform .18s ease-out';
+          el.style.transform = 'translate3d(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px,0)';
+        });
+        el.addEventListener('pointerleave', function () {
+          el.style.transition = 'transform .55s cubic-bezier(.34,1.65,.5,1)';
+          el.style.transform = '';
+          resetTimer = window.setTimeout(function () {
+            el.style.transition = '';
+            el.style.transform = '';
+          }, 600);
+        });
+      });
     }());
   </script>
 </body>
