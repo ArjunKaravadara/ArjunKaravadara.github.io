@@ -153,22 +153,22 @@
       align-items: center;
       gap: 8px;
       padding: 7px 9px 7px 8px;
-      border: 1px solid rgba(255, 255, 255, .55);
+      border: 1.5px solid rgba(255,255,255,.9);
       border-radius: 999px;
       background:
-        linear-gradient(115deg, rgba(255,255,255,.38) 0%, rgba(255,255,255,.05) 34%, rgba(255,255,255,0) 55%, rgba(255,255,255,.16) 100%),
-        linear-gradient(180deg, rgba(255,255,255,.66) 0%, rgba(255,255,255,.34) 46%, rgba(232,236,240,.26) 100%);
+        linear-gradient(118deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,.055) 37%, rgba(56,64,70,.06) 65%, rgba(255,255,255,.16) 100%),
+        rgba(255,255,255,.08);
       color: #171717;
       box-shadow:
-        0 22px 44px rgba(23,23,23,.20),
-        0 6px 14px rgba(23,23,23,.10),
-        inset 0 1px 1px rgba(255,255,255,1),
-        inset 0 12px 20px rgba(255,255,255,.38),
-        inset 0 -12px 22px rgba(30,38,48,.10),
-        inset 1px 0 1px rgba(255,255,255,.55),
-        inset -1px 0 1px rgba(255,255,255,.35);
-      backdrop-filter: blur(42px) saturate(220%) brightness(1.07) contrast(1.05);
-      -webkit-backdrop-filter: blur(42px) saturate(220%) brightness(1.07) contrast(1.05);
+        0 18px 38px rgba(8,12,16,.2),
+        0 4px 10px rgba(8,12,16,.12),
+        inset 0 1.5px 0 rgba(255,255,255,.98),
+        inset 0 8px 13px rgba(255,255,255,.15),
+        inset 0 -10px 18px rgba(28,35,40,.13),
+        inset 1px 0 0 rgba(255,255,255,.42),
+        inset -1px 0 0 rgba(255,255,255,.24);
+      backdrop-filter: blur(18px) saturate(150%) brightness(1.02) contrast(.95);
+      -webkit-backdrop-filter: blur(18px) saturate(150%) brightness(1.02) contrast(.95);
       pointer-events: auto;
       transform: translateZ(0);
       transition: width .42s cubic-bezier(.22,1,.36,1), padding .42s cubic-bezier(.22,1,.36,1), box-shadow .3s ease;
@@ -183,7 +183,7 @@
       inset: 0;
       border-radius: inherit;
       padding: 1.5px;
-      background: linear-gradient(165deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.38) 30%, rgba(255,255,255,.07) 52%, rgba(255,255,255,.30) 78%, rgba(255,255,255,.72) 100%);
+      background: linear-gradient(155deg, rgba(255,255,255,1) 0%, rgba(255,255,255,.58) 22%, rgba(255,255,255,.10) 47%, rgba(111,132,148,.24) 67%, rgba(255,255,255,.76) 100%);
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -194,28 +194,19 @@
       content: "";
       position: absolute;
       z-index: 0;
-      top: -58%;
-      bottom: -58%;
-      left: -38%;
-      width: 24%;
-      border-radius: 999px;
-      background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,.08) 18%, rgba(255,255,255,.70) 50%, rgba(255,255,255,.10) 82%, transparent 100%);
-      opacity: .56;
-      transform: skewX(-20deg) translate3d(0,0,0);
-      animation: navSheen 7.5s ease-in-out 2.2s infinite;
+      inset: 2px;
+      border-radius: inherit;
+      background:
+        linear-gradient(112deg, transparent 10%, rgba(255,255,255,.23) 33%, rgba(255,255,255,.04) 52%, transparent 72%),
+        linear-gradient(180deg, rgba(255,255,255,.30) 0, transparent 28%);
+      opacity: .78;
       pointer-events: none;
-    }
-    @keyframes navSheen {
-      0%, 64%, 100% { transform: skewX(-20deg) translate3d(0,0,0); opacity: 0; }
-      69% { opacity: .56; }
-      82% { transform: skewX(-20deg) translate3d(620%,0,0); opacity: .56; }
-      87% { transform: skewX(-20deg) translate3d(620%,0,0); opacity: 0; }
     }
     .nav > * { position: relative; z-index: 1; }
     @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
       .nav { background:
-        linear-gradient(115deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,.04) 34%, rgba(255,255,255,0) 55%, rgba(255,255,255,.12) 100%),
-        linear-gradient(180deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.16) 48%, rgba(226,231,236,.10) 100%); }
+        linear-gradient(118deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,.05) 37%, rgba(38,46,52,.055) 65%, rgba(255,255,255,.15) 100%),
+        rgba(255,255,255,.075); }
     }
     .nav-brand {
       display: inline-flex;
@@ -228,7 +219,26 @@
       font-weight: 900;
       letter-spacing: .09em;
     }
-    .nav-brand img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; object-position: 50% 50%; }
+    .nav-avatar { position: relative; width: 34px; height: 34px; display: inline-flex; flex: 0 0 auto; overflow: hidden; border: 1px solid rgba(255,255,255,.92); border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1px rgba(23,23,23,.08), 0 2px 7px rgba(23,23,23,.16); }
+    .nav-avatar-image { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; transform: scale(1.06); }
+    .avatar-reactive { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .avatar-pupils { transform-box: fill-box; transform-origin: center; will-change: transform; }
+    .avatar-lids { opacity: 0; transform-box: fill-box; transform-origin: center; transition: opacity .12s ease; }
+    .nav-avatar.is-blinking .avatar-lids { opacity: 1; }
+    .avatar-mouth { opacity: 0; transition: opacity .24s ease; }
+    .avatar-mouth-friendly { opacity: 1; }
+    .avatar-confetti { opacity: 0; transition: opacity .28s ease; }
+    .nav-avatar[data-reaction="woo"] .avatar-mouth-friendly,
+    .nav-avatar[data-reaction="focus"] .avatar-mouth-friendly,
+    .nav-avatar[data-reaction="celebrate"] .avatar-mouth-friendly { opacity: 0; }
+    .nav-avatar[data-reaction="woo"] .avatar-mouth-woo,
+    .nav-avatar[data-reaction="focus"] .avatar-mouth-focus,
+    .nav-avatar[data-reaction="celebrate"] .avatar-mouth-celebrate { opacity: 1; }
+    .nav-avatar[data-reaction="woo"] .avatar-eye-whites { transform: scale(1.08); transform-origin: center; }
+    .nav-avatar[data-reaction="focus"] .avatar-brow-left { transform: rotate(8deg) translateY(1px); transform-origin: right center; }
+    .nav-avatar[data-reaction="focus"] .avatar-brow-right { transform: rotate(-8deg) translateY(1px); transform-origin: left center; }
+    .nav-avatar[data-reaction="celebrate"] .avatar-confetti { opacity: 1; }
+    .avatar-eye-whites, .avatar-brow { transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .nav-links { display: flex; align-items: center; gap: 2px; overflow: hidden; max-width: 220px; opacity: 1; translate: 0 0; transition: max-width .4s cubic-bezier(.22,1,.36,1), opacity .15s ease, translate .2s ease; }
     .nav-more { display: none; padding: 0 7px 2px 3px; color: #171717; font-size: 14px; font-weight: 900; letter-spacing: .12em; line-height: 1; }
     .nav.is-collapsed { padding-right: 8px; }
@@ -276,7 +286,7 @@
       height: calc(100% + 20px);
       object-fit: cover;
       object-position: right center;
-      transform: translate3d(0, var(--hero-y, 0px), 0) scale(1.015);
+      transform: translate3d(var(--gyro-x, 0px), calc(var(--hero-y, 0px) + var(--gyro-y, 0px)), 0) scale(1.015);
       transform-origin: right center;
       will-change: transform;
     }
@@ -494,6 +504,86 @@
       background: radial-gradient(circle, rgba(242, 86, 35, .16) 0%, rgba(242, 86, 35, .07) 38%, rgba(242, 86, 35, 0) 68%);
       will-change: transform, opacity;
     }
+
+    /* Fine, fixed reading cue below the floating navigation. */
+    .scroll-progress {
+      position: fixed;
+      z-index: 45;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 3px;
+      pointer-events: none;
+      transform: scaleX(0);
+      transform-origin: left center;
+      background: linear-gradient(90deg, #f25623, #ff9b56);
+      box-shadow: 0 1px 8px rgba(242,86,35,.34);
+      will-change: transform;
+    }
+
+    /* Canvas sits between the hero image treatment and copy so its soft
+       amber light never compromises the headline or supporting text. */
+    .hero-particles {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: .68;
+      mix-blend-mode: screen;
+    }
+
+    .motion-permission {
+      position: fixed;
+      z-index: 72;
+      left: max(14px, env(safe-area-inset-left));
+      bottom: max(14px, env(safe-area-inset-bottom));
+      display: none;
+      align-items: center;
+      min-height: 38px;
+      padding: 9px 14px;
+      border: 1px solid rgba(255,255,255,.58);
+      border-radius: 999px;
+      color: #171717;
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 12px 34px rgba(23,23,23,.18), inset 0 1px 0 rgba(255,255,255,.9);
+      backdrop-filter: blur(18px) saturate(145%);
+      -webkit-backdrop-filter: blur(18px) saturate(145%);
+      font: 800 12px/1 "Inter", sans-serif;
+      cursor: pointer;
+    }
+    html.motion-permission-needed .motion-permission { display: inline-flex; }
+    .motion-permission:focus-visible { outline: 3px solid rgba(242,86,35,.34); outline-offset: 3px; }
+    .motion-permission:active { transform: translateY(1px); }
+
+    /* Client logo marquee */
+    .client-strip { overflow: hidden; border-bottom: 1px solid var(--line); background: var(--surface); }
+    .client-strip-inner { min-height: 132px; display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: clamp(28px, 5vw, 76px); }
+    .client-strip-label { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; white-space: nowrap; }
+    .client-logo-marquee {
+      min-width: 0;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .client-logo-track { display: flex; width: max-content; animation: clientLogoTicker 22s linear infinite; }
+    .client-logo-marquee:hover .client-logo-track { animation-play-state: paused; }
+    .client-logo-set { display: flex; flex: 0 0 auto; align-items: center; gap: clamp(26px, 4vw, 58px); padding-right: clamp(26px, 4vw, 58px); }
+    .client-logo {
+      position: relative;
+      width: clamp(112px, 12vw, 142px);
+      height: 72px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(23,23,23,.08);
+      border-radius: 7px;
+      background: #fff;
+    }
+    .client-logo img { width: 100%; height: 100%; max-width: none; padding: 7px 10px; object-fit: contain; object-position: center; filter: grayscale(1); opacity: .7; transition: filter .3s ease, opacity .3s ease; }
+    .client-logo:hover img { filter: grayscale(0); opacity: 1; }
+    @keyframes clientLogoTicker { to { transform: translate3d(-50%,0,0); } }
 
     /* Work */
     .work-section { padding-bottom: 150px; }
@@ -1061,7 +1151,29 @@
     .contact h2 { position: relative; z-index: 3; margin: 0; max-width: 800px; padding: .1em .08em .14em; font-size: clamp(4rem, 9.2vw, 8.4rem); line-height: .9; letter-spacing: -.075em; font-weight: 900; text-transform: lowercase; cursor: pointer; transition: opacity .25s ease; }
     .contact h2.is-physics { pointer-events: none; }
     .contact h2.is-physics > .physics-source { visibility: hidden; }
-    .contact h2 .create { display: inline-block; color: var(--accent); font-family: "Caveat", cursive; font-size: 1.03em; font-weight: 600; transform: rotate(-5deg); }
+    .contact h2 .create { position: relative; display: inline-block; color: var(--accent); font-family: "Caveat", cursive; font-size: 1.03em; font-weight: 600; vertical-align: baseline; transform: rotate(-5deg); }
+    .word-rotator-measure { display: block; visibility: hidden; white-space: nowrap; }
+    .word-rotator-window { position: absolute; inset: -.16em -.12em -.14em; overflow: hidden; pointer-events: none; }
+    .word-rotator-word {
+      position: absolute;
+      left: .12em;
+      top: .16em;
+      display: block;
+      white-space: nowrap;
+      opacity: 0;
+      filter: blur(7px);
+      transform: translate3d(0,72%,0);
+      will-change: opacity, filter, transform;
+      animation: contactWordCycle 8.8s cubic-bezier(.22,1,.36,1) infinite both;
+    }
+    .word-rotator-word:nth-child(2) { animation-delay: 2.2s; }
+    .word-rotator-word:nth-child(3) { animation-delay: 4.4s; }
+    .word-rotator-word:nth-child(4) { animation-delay: 6.6s; }
+    @keyframes contactWordCycle {
+      0% { opacity: 0; filter: blur(7px); transform: translate3d(0,72%,0); }
+      5%, 22% { opacity: 1; filter: blur(0); transform: translate3d(0,0,0); }
+      30%, 100% { opacity: 0; filter: blur(7px); transform: translate3d(0,-72%,0); }
+    }
     .physics-layer { position: absolute; z-index: 4; inset: 0; overflow: hidden; pointer-events: none; }
     .physics-word { position: absolute; left: 0; top: 0; display: block; margin: 0; padding: 0; white-space: nowrap; user-select: none; touch-action: none; pointer-events: auto; cursor: grab; transform-origin: center; will-change: transform; }
     .physics-word.is-grabbed { cursor: grabbing; z-index: 2; }
@@ -1134,6 +1246,11 @@
     @media (max-width: 720px) {
       .whatsapp-float { width: 54px; height: 54px; right: 16px; bottom: 16px; }
       .whatsapp-cta { font-size: 15px; padding: 14px 22px; }
+      .client-strip-inner { min-height: 146px; grid-template-columns: 1fr; gap: 15px; padding-block: 24px; }
+      .client-logo-marquee { width: calc(100% + 24px); margin-left: -12px; }
+      .client-logo { width: 116px; height: 68px; }
+      .client-logo img { padding: 6px 8px; }
+      .client-logo-set { gap: 20px; padding-right: 20px; }
     }
     .made { padding: 10px 14px; border-radius: 999px; background: white; color: #171717; }
     .watermark { position: absolute; left: 16px; bottom: clamp(20px, 2vw, 32px); width: calc(100% - 32px); font-size: clamp(1.75rem, 8.4vw, 8rem); line-height: .9; font-weight: 900; letter-spacing: -.08em; text-align: center; white-space: nowrap; color: rgba(255,255,255,.07); pointer-events: none; }
@@ -1234,6 +1351,7 @@
       transform-origin: top center;
       transition: transform .8s var(--motion-ease);
       transition-delay: var(--reveal-delay, 0ms);
+      transform-style: preserve-3d;
       will-change: transform;
     }
     .project.is-visible { --entry-y: 0px; }
@@ -1380,7 +1498,7 @@
       .nav-links a { padding-inline: 6px; }
       .nav-brand { gap: 6px; }
       .nav-brand span { font-size: 8px; }
-      .nav-brand img { width: 31px; height: 31px; }
+      .nav-avatar { width: 31px; height: 31px; }
       .hero-title { font-size: clamp(3.5rem, 15.2vw, 4.8rem); letter-spacing: -.09em; }
       .hero-script { font-size: clamp(3.7rem, 16vw, 5rem); }
       .display { font-size: 2.8rem; }
@@ -1398,7 +1516,12 @@
        stacked and the 16:9 photo is shown whole, never portrait-cropped.
        Sizes are in vw so the whole lockup scales with the frame. */
     @media (max-width: 720px) and (orientation: portrait) {
+      .nav-wrap { top: max(8px, env(safe-area-inset-top)); }
+      .nav { width: calc(100% - 24px); }
       .hero { min-height: 0; height: 56.25vw; }
+      .hero-copy { padding-top: 2vw; }
+      .hello { margin-top: 0; }
+      .hero-lockup { margin-top: 1.15vw; }
       .hero-media::before {
         background: linear-gradient(90deg,
           #f25623 0%,
@@ -1411,10 +1534,10 @@
           rgba(242,86,35,.07) 79%,
           rgba(242,86,35,0) 88%);
       }
-      .hero-inner { width: min(var(--max), calc(100% - 7.2vw)); min-height: 0; padding: 12.5vw 0 2vw; }
+      .hero-inner { width: min(var(--max), calc(100% - 7.2vw)); min-height: 0; padding: 17vw 0 1.2vw; }
       .hero-copy { width: 66vw; max-width: none; }
-      .hello { font-size: 2.7vw; min-height: 6vw; padding: 1.4vw 2.8vw; gap: 1.6vw; }
-      .hero-lockup { margin-top: 2.2vw; }
+      .hello { font-size: 2.7vw; min-height: 6vw; padding: 1.25vw 2.8vw; gap: 1.6vw; }
+      .hero-lockup { margin-top: 1.15vw; }
       .hero-title { font-size: 8.6vw; line-height: 1.08; letter-spacing: -.08em; }
       .hero-script { font-size: 8.3vw; line-height: 1.18; margin-left: 36%; }
       .hero-kicker-mask { margin-top: calc(2vw - .62em); }
@@ -1438,12 +1561,24 @@
       .project { opacity: 1 !important; transform: none !important; }
       .contact-thumb { --tilt-x: 0deg !important; --tilt-y: 0deg !important; --sheen-opacity: 0 !important; transform: rotate(5deg) !important; will-change: auto !important; }
       .contact-thumb img { transform: none !important; }
-      .preloader { display: none !important; }
-      .physics-reset { display: none !important; }
+      .preloader, .hero-particles { display: none !important; }
+      .nav-avatar .avatar-pupils { transform: none !important; }
+      .nav-avatar .avatar-lids, .nav-avatar .avatar-mouth-woo, .nav-avatar .avatar-mouth-focus, .nav-avatar .avatar-mouth-celebrate, .nav-avatar .avatar-confetti { opacity: 0 !important; }
+      .nav-avatar .avatar-mouth-friendly { opacity: 1 !important; }
+      .nav-avatar .avatar-eye-whites, .nav-avatar .avatar-brow { transform: none !important; }
+      .physics-reset, .motion-permission { display: none !important; }
+      .scroll-progress { transition: none !important; }
+      .word-rotator-word { display: none !important; animation: none !important; }
+      .word-rotator-word:first-child { display: block !important; opacity: 1 !important; filter: none !important; transform: none !important; }
+      .client-logo-track { width: 100%; animation: none !important; transform: none !important; }
+      .client-logo-set { width: 100%; flex-wrap: wrap; justify-content: center; padding-right: 0; }
+      .client-logo-set[aria-hidden="true"] { display: none; }
     }
   </style>
 </head>
 <body>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <button class="motion-permission" id="motion-permission" type="button">Enable Motion ✨</button>
   <div class="cursor-spotlight" id="cursor-spotlight" aria-hidden="true"></div>
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader-name"><span class="preloader-word">Arjun</span><span class="preloader-dots"><i></i><i></i><i></i></span><span class="preloader-word">Karavadara</span></div>
@@ -1451,7 +1586,22 @@
   <div class="nav-wrap">
     <nav class="nav" aria-label="Primary navigation">
       <a class="nav-brand" href="#top" aria-label="Arjun Karavadara, back to top">
-        <img src="arjun-pixar-avatar.png" alt="Cartoon portrait of Arjun Karavadara" />
+        <span class="nav-avatar" id="nav-avatar" role="img" aria-label="Reactive 3D avatar of Arjun Karavadara">
+          <img class="nav-avatar-image" src="arjun-nav-avatar-white.png" alt="" />
+          <svg class="avatar-reactive" viewBox="0 0 34 34" aria-hidden="true">
+            <g class="avatar-pupils" id="avatar-pupils">
+              <circle cx="14.1" cy="14.4" r=".75" fill="#111"/><circle cx="20.9" cy="14.4" r=".75" fill="#111"/>
+              <circle cx="13.86" cy="14.15" r=".18" fill="#fff"/><circle cx="20.66" cy="14.15" r=".18" fill="#fff"/>
+            </g>
+            <g class="avatar-lids"><path d="M11.8 14.4q2.3-1.8 4.6 0-2.3 1.2-4.6 0z" fill="#e7b8a5"/><path d="M18.6 14.4q2.3-1.8 4.6 0-2.3 1.2-4.6 0z" fill="#e7b8a5"/></g>
+            <path class="avatar-brow avatar-brow-left" d="M11.8 11.7q2.2-1 4.5 0" fill="none" stroke="#161616" stroke-width=".7" stroke-linecap="round"/>
+            <path class="avatar-brow avatar-brow-right" d="M18.8 11.7q2.2-1 4.4 0" fill="none" stroke="#161616" stroke-width=".7" stroke-linecap="round"/>
+            <path class="avatar-mouth avatar-mouth-woo" d="M15.4 21.2q2.1-1.5 4.2 0v1.2q-2.1 2-4.2 0z" fill="#542922"/>
+            <path class="avatar-mouth avatar-mouth-focus" d="M15.2 22.2q2.3.5 4.6-.1" fill="none" stroke="#3b211d" stroke-width=".8" stroke-linecap="round"/>
+            <path class="avatar-mouth avatar-mouth-celebrate" d="M15 21.2q2.6 2.8 5.1 0-.4 3-2.5 3t-2.6-3z" fill="#fff" stroke="#542922" stroke-width=".45"/>
+            <g class="avatar-confetti"><path d="M6 9l2-1M27 8l-1 2M28 18l2 .5M5 19l-2 .6" stroke="#f25623" stroke-width="1" stroke-linecap="round"/></g>
+          </svg>
+        </span>
         <span>ARJUN KARAVADARA</span>
       </a>
       <div class="nav-links">
@@ -1470,6 +1620,7 @@
         <div class="hero-aurora"></div>
         <div class="hero-grain"></div>
       </div>
+      <canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas>
       <div class="shell hero-inner">
         <div class="hero-copy">
           <span class="eyebrow hello">👋 Hey, I'm Arjun Karavadara</span>
@@ -1501,6 +1652,28 @@
         <div class="stats reveal">
           <div class="stat"><strong data-count-to="10" data-suffix="+">10+</strong><span>Projects shipped</span></div>
           <div class="stat"><strong>Tools</strong><span>After Effects, Premiere Pro, Unreal Engine</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="client-strip" aria-label="Worked with">
+      <div class="shell client-strip-inner">
+        <div class="client-strip-label">Worked with</div>
+        <div class="client-logo-marquee">
+          <div class="client-logo-track">
+            <div class="client-logo-set">
+              <div class="client-logo"><img src="sandhya-logo-600.jpg" alt="Sandhya Branding Agency" loading="lazy" /></div>
+              <div class="client-logo"><img src="sfumato-logo-600.jpg" alt="Sfumato Advertising Studio" loading="lazy" /></div>
+              <div class="client-logo"><img src="stylo-logo-600.jpg" alt="Stylo The Graphics Hub" loading="lazy" /></div>
+              <div class="client-logo"><img src="habikon-logo-600.jpg" alt="Habikon Advertising Studio" loading="lazy" /></div>
+            </div>
+            <div class="client-logo-set" aria-hidden="true">
+              <div class="client-logo"><img src="sandhya-logo-600.jpg" alt="" loading="lazy" /></div>
+              <div class="client-logo"><img src="sfumato-logo-600.jpg" alt="" loading="lazy" /></div>
+              <div class="client-logo"><img src="stylo-logo-600.jpg" alt="" loading="lazy" /></div>
+              <div class="client-logo"><img src="habikon-logo-600.jpg" alt="" loading="lazy" /></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1765,7 +1938,7 @@
     <button class="physics-reset" type="button" aria-label="Reset headline physics">↺ Reset</button>
     <div class="shell">
       <div class="contact-top reveal">
-        <h2 role="button" tabindex="0" aria-label="Play with the contact headline">lets <span class="create">create</span><br />incredible work together.</h2>
+        <h2 role="button" tabindex="0" aria-label="Play with the contact headline">lets <span class="create word-rotator" aria-label="create"><span class="word-rotator-measure" aria-hidden="true">create</span><span class="word-rotator-window" aria-hidden="true"><span class="word-rotator-word">create</span><span class="word-rotator-word">design</span><span class="word-rotator-word">build</span><span class="word-rotator-word">craft</span></span></span><br />incredible work together.</h2>
         <div class="contact-thumb"><img src="arjun-studio-orange.png" alt="Arjun Karavadara in side profile against an orange studio background" /></div>
       </div>
       <div class="social-row reveal">
@@ -2493,6 +2666,182 @@
     }());
   </script>
   <script>
+    /* Phone/tablet tilt parallax. The effect starts only after real sensor
+       data arrives, yields to touch scrolling, and never runs for reduced motion. */
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var touchDevice = navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+      var orientationAPI = window.DeviceOrientationEvent;
+      var permissionButton = document.getElementById('motion-permission');
+      var heroImage = document.querySelector('.hero-bg');
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.project'));
+      var permissionRequired = orientationAPI && typeof orientationAPI.requestPermission === 'function';
+      var listening = false;
+      var calibrated = false;
+      var scrolling = false;
+      var scrollTimer = 0;
+      var frame = 0;
+      var baseline = { x: 0, y: 0 };
+      var target = { x: 0, y: 0 };
+      var current = { x: 0, y: 0 };
+
+      if (!touchDevice || !orientationAPI || reduced.matches || !heroImage) return;
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function screenAngle() {
+        var angle = window.screen && window.screen.orientation && Number(window.screen.orientation.angle);
+        if (!isFinite(angle)) angle = Number(window.orientation) || 0;
+        return ((angle % 360) + 360) % 360;
+      }
+
+      function axesForScreen(beta, gamma) {
+        var angle = screenAngle();
+        if (angle === 90) return { x: beta, y: -gamma };
+        if (angle === 270) return { x: -beta, y: gamma };
+        if (angle === 180) return { x: -gamma, y: -beta };
+        return { x: gamma, y: beta };
+      }
+
+      function normalized(delta) {
+        var deadZone = 1.4;
+        if (Math.abs(delta) <= deadZone) return 0;
+        return clamp((delta - Math.sign(delta) * deadZone) / 18, -1, 1);
+      }
+
+      function applyMotion() {
+        heroImage.style.setProperty('--gyro-x', (current.x * 6).toFixed(2) + 'px');
+        heroImage.style.setProperty('--gyro-y', (current.y * 4).toFixed(2) + 'px');
+        cards.forEach(function (card) {
+          card.style.setProperty('--tilt-rx', (-current.y * 2.35).toFixed(3) + 'deg');
+          card.style.setProperty('--tilt-ry', (current.x * 2.75).toFixed(3) + 'deg');
+          card.style.setProperty('--gloss-x', (50 + current.x * 13).toFixed(1) + '%');
+          card.style.setProperty('--gloss-y', (50 + current.y * 10).toFixed(1) + '%');
+          card.style.setProperty('--gloss-opacity', (Math.max(Math.abs(current.x), Math.abs(current.y)) * .38).toFixed(3));
+        });
+        window.dispatchEvent(new CustomEvent('portfolio-tilt', { detail: { x: current.x, y: current.y } }));
+      }
+
+      function settleMotion() {
+        if (document.hidden || reduced.matches) {
+          frame = 0;
+          return;
+        }
+        current.x += (target.x - current.x) * .085;
+        current.y += (target.y - current.y) * .085;
+        if (Math.abs(target.x - current.x) < .0015) current.x = target.x;
+        if (Math.abs(target.y - current.y) < .0015) current.y = target.y;
+        applyMotion();
+        if (Math.abs(target.x - current.x) > .0015 || Math.abs(target.y - current.y) > .0015) {
+          frame = requestAnimationFrame(settleMotion);
+        } else {
+          frame = 0;
+        }
+      }
+
+      function queueMotion() {
+        if (!frame && !document.hidden) frame = requestAnimationFrame(settleMotion);
+      }
+
+      function resetMotion(immediate) {
+        target.x = 0;
+        target.y = 0;
+        if (immediate) {
+          current.x = 0;
+          current.y = 0;
+          applyMotion();
+        } else {
+          queueMotion();
+        }
+      }
+
+      function onOrientation(event) {
+        if (document.hidden || scrolling || reduced.matches) return;
+        var beta = Number(event.beta);
+        var gamma = Number(event.gamma);
+        if (!isFinite(beta) || !isFinite(gamma)) return;
+        var axes = axesForScreen(beta, gamma);
+        if (!calibrated) {
+          baseline.x = axes.x;
+          baseline.y = axes.y;
+          calibrated = true;
+          return;
+        }
+        target.x = normalized(axes.x - baseline.x);
+        target.y = normalized(axes.y - baseline.y);
+        queueMotion();
+      }
+
+      function startListening() {
+        if (listening) return;
+        listening = true;
+        window.addEventListener('deviceorientation', onOrientation, { passive: true });
+      }
+
+      function hidePermission() {
+        document.documentElement.classList.remove('motion-permission-needed');
+      }
+
+      if (permissionRequired) {
+        document.documentElement.classList.add('motion-permission-needed');
+        permissionButton.addEventListener('click', function () {
+          permissionButton.disabled = true;
+          Promise.resolve(orientationAPI.requestPermission()).then(function (state) {
+            hidePermission();
+            if (state === 'granted') startListening();
+          }).catch(function () {
+            hidePermission();
+          });
+        }, { once: true });
+      } else {
+        startListening();
+      }
+
+      window.addEventListener('touchstart', function () {
+        window.clearTimeout(scrollTimer);
+      }, { passive: true });
+      window.addEventListener('touchmove', function () {
+        scrolling = true;
+        resetMotion(false);
+        window.clearTimeout(scrollTimer);
+      }, { passive: true });
+      function releaseScroll() {
+        window.clearTimeout(scrollTimer);
+        scrollTimer = window.setTimeout(function () {
+          scrolling = false;
+          calibrated = false;
+        }, 220);
+      }
+      window.addEventListener('touchend', releaseScroll, { passive: true });
+      window.addEventListener('touchcancel', releaseScroll, { passive: true });
+      window.addEventListener('orientationchange', function () {
+        calibrated = false;
+        resetMotion(false);
+      }, { passive: true });
+      document.addEventListener('visibilitychange', function () {
+        calibrated = false;
+        if (document.hidden) {
+          if (frame) cancelAnimationFrame(frame);
+          frame = 0;
+          resetMotion(true);
+        }
+      });
+      if (typeof reduced.addEventListener === 'function') {
+        reduced.addEventListener('change', function (event) {
+          if (!event.matches) return;
+          hidePermission();
+          if (frame) cancelAnimationFrame(frame);
+          frame = 0;
+          resetMotion(true);
+          if (listening) window.removeEventListener('deviceorientation', onOrientation);
+          listening = false;
+        });
+      }
+    }());
+  </script>
+  <script>
     (function () {
       var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -2656,6 +3005,315 @@
           }, 600);
         });
       });
+    }());
+  </script>
+  <script>
+    /* Reactive nav portrait: pointer/tap gaze, organic blinking and contextual
+       expressions for work, playback and the closing section. */
+    (function () {
+      var avatar = document.getElementById('nav-avatar');
+      var pupils = document.getElementById('avatar-pupils');
+      var work = document.getElementById('work');
+      var footer = document.getElementById('contact');
+      var modal = document.getElementById('video-modal');
+      var mediaFrames = Array.prototype.slice.call(document.querySelectorAll('.project-media'));
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (!avatar || !pupils || reduced.matches) return;
+
+      var gaze = { x: 0, y: 0, tx: 0, ty: 0 };
+      var raf = 0;
+      var blinkTimer = 0;
+      var workVisible = false;
+      var footerVisible = false;
+      var videoPlaying = false;
+      var tapCelebrate = false;
+      var tapTimer = 0;
+
+      function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
+
+      function setGaze(clientX, clientY) {
+        var rect = avatar.getBoundingClientRect();
+        var centerX = rect.left + rect.width / 2;
+        var centerY = rect.top + rect.height / 2;
+        var dx = clientX - centerX;
+        var dy = clientY - centerY;
+        var length = Math.sqrt(dx * dx + dy * dy) || 1;
+        var strength = Math.min(2.15, length / 115);
+        gaze.tx = dx / length * strength;
+        gaze.ty = dy / length * strength;
+        if (!raf) raf = requestAnimationFrame(animateGaze);
+      }
+
+      function animateGaze() {
+        gaze.x += (gaze.tx - gaze.x) * .16;
+        gaze.y += (gaze.ty - gaze.y) * .16;
+        pupils.style.transform = 'translate3d(' + gaze.x.toFixed(2) + 'px,' + gaze.y.toFixed(2) + 'px,0)';
+        if (Math.abs(gaze.tx - gaze.x) > .015 || Math.abs(gaze.ty - gaze.y) > .015) raf = requestAnimationFrame(animateGaze);
+        else raf = 0;
+      }
+
+      function updateReaction() {
+        var state = (tapCelebrate || footerVisible) ? 'celebrate' : (videoPlaying ? 'woo' : (workVisible ? 'focus' : 'friendly'));
+        avatar.setAttribute('data-reaction', state);
+      }
+
+      function readPlayback() {
+        videoPlaying = mediaFrames.some(function (frame) { return frame.classList.contains('is-playing'); }) || !!(modal && modal.classList.contains('is-open'));
+        updateReaction();
+      }
+
+      function blink() {
+        if (document.hidden || reduced.matches) return;
+        avatar.classList.add('is-blinking');
+        window.setTimeout(function () { avatar.classList.remove('is-blinking'); }, 135);
+        scheduleBlink();
+      }
+
+      function scheduleBlink() {
+        window.clearTimeout(blinkTimer);
+        blinkTimer = window.setTimeout(blink, 2600 + Math.random() * 3300);
+      }
+
+      window.addEventListener('pointermove', function (event) {
+        if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+        setGaze(event.clientX, event.clientY);
+      }, { passive: true });
+      window.addEventListener('touchstart', function (event) {
+        var touch = event.touches && event.touches[0];
+        if (touch) setGaze(touch.clientX, touch.clientY);
+      }, { passive: true });
+      avatar.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        window.clearTimeout(tapTimer);
+        tapCelebrate = true;
+        updateReaction();
+        avatar.classList.add('is-blinking');
+        window.setTimeout(function () { avatar.classList.remove('is-blinking'); }, 135);
+        tapTimer = window.setTimeout(function () {
+          tapCelebrate = false;
+          updateReaction();
+        }, 1100);
+      });
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) { workVisible = entry.isIntersecting; });
+          updateReaction();
+        }, { threshold: .12 }).observe(work);
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) { footerVisible = entry.isIntersecting; });
+          updateReaction();
+        }, { threshold: .14 }).observe(footer);
+      }
+
+      var stateObserver = new MutationObserver(readPlayback);
+      mediaFrames.forEach(function (frame) { stateObserver.observe(frame, { attributes: true, attributeFilter: ['class'] }); });
+      if (modal) stateObserver.observe(modal, { attributes: true, attributeFilter: ['class'] });
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          window.clearTimeout(blinkTimer);
+          avatar.classList.remove('is-blinking');
+          if (raf) cancelAnimationFrame(raf);
+          raf = 0;
+        } else {
+          scheduleBlink();
+        }
+      });
+      if (typeof reduced.addEventListener === 'function') {
+        reduced.addEventListener('change', function (event) {
+          if (!event.matches) return;
+          window.clearTimeout(blinkTimer);
+          if (raf) cancelAnimationFrame(raf);
+          raf = 0;
+          avatar.removeAttribute('data-reaction');
+          avatar.classList.remove('is-blinking');
+          pupils.style.transform = '';
+          stateObserver.disconnect();
+        });
+      }
+      scheduleBlink();
+      updateReaction();
+    }());
+  </script>
+  <script>
+    /* Subtle hero particle field: capped for predictable performance, paused
+       off-tab, and fully omitted when reduced motion is requested. */
+    (function () {
+      var canvas = document.getElementById('hero-particles');
+      var hero = document.querySelector('.hero');
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (!canvas || !hero || reduced.matches) return;
+
+      var ctx = canvas.getContext('2d', { alpha: true });
+      if (!ctx) return;
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      var particles = [];
+      var raf = 0;
+      var last = 0;
+      var width = 0;
+      var height = 0;
+      var dpr = 1;
+      var mouse = { x: 0, y: 0, targetX: 0, targetY: 0, active: false };
+      var tilt = { x: 0, y: 0, targetX: 0, targetY: 0 };
+      var palette = [
+        [255, 236, 194],
+        [255, 195, 118],
+        [255, 151, 73]
+      ];
+
+      function random(min, max) { return min + Math.random() * (max - min); }
+
+      function makeParticle() {
+        var color = palette[Math.floor(Math.random() * palette.length)];
+        return {
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: random(.7, 2.1),
+          vx: random(-4.5, 4.5),
+          vy: random(-10, -3.2),
+          alpha: random(.08, .26),
+          phase: random(0, Math.PI * 2),
+          color: color
+        };
+      }
+
+      function resize() {
+        var rect = hero.getBoundingClientRect();
+        width = Math.max(1, Math.round(rect.width));
+        height = Math.max(1, Math.round(rect.height));
+        dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var count = Math.min(36, Math.max(15, Math.round(width * height / 29000)));
+        if (!finePointer) count = Math.min(count, 20);
+        particles = [];
+        while (particles.length < count) particles.push(makeParticle());
+      }
+
+      function movePointer(event) {
+        if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+        var rect = hero.getBoundingClientRect();
+        mouse.targetX = event.clientX - rect.left;
+        mouse.targetY = event.clientY - rect.top;
+        mouse.active = true;
+      }
+
+      function leavePointer() { mouse.active = false; }
+
+      function draw(time) {
+        if (document.hidden || reduced.matches) { raf = 0; return; }
+        var delta = Math.min(34, Math.max(8, time - (last || time))) / 1000;
+        last = time;
+        mouse.x += (mouse.targetX - mouse.x) * .045;
+        mouse.y += (mouse.targetY - mouse.y) * .045;
+        tilt.x += (tilt.targetX - tilt.x) * .055;
+        tilt.y += (tilt.targetY - tilt.y) * .055;
+        ctx.clearRect(0, 0, width, height);
+
+        particles.forEach(function (p) {
+          p.phase += delta * .32;
+          p.x += (p.vx + Math.sin(p.phase) * 2.3) * delta;
+          p.y += p.vy * delta;
+          if (p.y < -12) { p.y = height + 12; p.x = Math.random() * width; }
+          if (p.x < -12) p.x = width + 12;
+          if (p.x > width + 12) p.x = -12;
+
+          var px = p.x + tilt.x * (7 + p.radius * 2.2);
+          var py = p.y + tilt.y * (4 + p.radius * 1.5);
+          if (mouse.active) {
+            var dx = px - mouse.x;
+            var dy = py - mouse.y;
+            var distance = Math.sqrt(dx * dx + dy * dy) || 1;
+            if (distance < 128) {
+              var push = (1 - distance / 128) * 10;
+              px += dx / distance * push;
+              py += dy / distance * push;
+            }
+          }
+
+          var glow = p.radius * 4.2;
+          ctx.beginPath();
+          ctx.fillStyle = 'rgba(' + p.color[0] + ',' + p.color[1] + ',' + p.color[2] + ',' + p.alpha.toFixed(3) + ')';
+          ctx.shadowColor = 'rgba(' + p.color[0] + ',' + p.color[1] + ',' + p.color[2] + ',' + Math.min(.32, p.alpha + .07).toFixed(3) + ')';
+          ctx.shadowBlur = glow;
+          ctx.arc(px, py, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.shadowBlur = 0;
+        raf = requestAnimationFrame(draw);
+      }
+
+      function start() {
+        if (!raf && !document.hidden && !reduced.matches) {
+          last = 0;
+          raf = requestAnimationFrame(draw);
+        }
+      }
+
+      resize();
+      start();
+      if (finePointer) {
+        hero.addEventListener('pointermove', movePointer, { passive: true });
+        hero.addEventListener('pointerleave', leavePointer, { passive: true });
+      }
+      window.addEventListener('portfolio-tilt', function (event) {
+        if (!event.detail) return;
+        tilt.targetX = Math.max(-1, Math.min(1, Number(event.detail.x) || 0));
+        tilt.targetY = Math.max(-1, Math.min(1, Number(event.detail.y) || 0));
+      });
+      window.addEventListener('resize', resize, { passive: true });
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          if (raf) cancelAnimationFrame(raf);
+          raf = 0;
+        } else {
+          start();
+        }
+      });
+      if (typeof reduced.addEventListener === 'function') {
+        reduced.addEventListener('change', function (event) {
+          if (!event.matches) return;
+          if (raf) cancelAnimationFrame(raf);
+          raf = 0;
+          ctx.clearRect(0, 0, width, height);
+          canvas.style.display = 'none';
+        });
+      }
+    }());
+  </script>
+  <script>
+    /* rAF-throttled scroll progress with a soft eased catch-up. */
+    (function () {
+      var bar = document.getElementById('scroll-progress');
+      if (!bar) return;
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var target = 0;
+      var current = 0;
+      var raf = 0;
+
+      function measure() {
+        var root = document.documentElement;
+        var range = Math.max(1, root.scrollHeight - window.innerHeight);
+        target = Math.max(0, Math.min(1, window.scrollY / range));
+        if (reduced) current = target;
+        if (!raf) raf = requestAnimationFrame(render);
+      }
+
+      function render() {
+        current += (target - current) * (reduced ? 1 : .18);
+        if (Math.abs(target - current) < .0004) current = target;
+        bar.style.transform = 'scaleX(' + current.toFixed(4) + ')';
+        if (current !== target) raf = requestAnimationFrame(render);
+        else raf = 0;
+      }
+
+      window.addEventListener('scroll', measure, { passive: true });
+      window.addEventListener('resize', measure, { passive: true });
+      measure();
     }());
   </script>
 </body>
