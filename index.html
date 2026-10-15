@@ -143,6 +143,8 @@
       to { opacity: 1; transform: translate3d(0,0,0); }
     }
     .nav {
+      --glass-px: 50%;
+      --glass-py: 16%;
       position: relative;
       isolation: isolate;
       overflow: hidden;
@@ -153,61 +155,56 @@
       align-items: center;
       gap: 8px;
       padding: 7px 9px 7px 8px;
-      border: 1px solid rgba(255,255,255,.72);
+      border: 1px solid rgba(255,255,255,.62);
       border-radius: 999px;
       background:
-        linear-gradient(112deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,.07) 34%, rgba(255,255,255,.025) 59%, rgba(255,255,255,.14) 100%),
-        linear-gradient(180deg, rgba(255,255,255,.29) 0%, rgba(255,255,255,.10) 48%, rgba(18,24,31,.12) 100%);
+        linear-gradient(108deg, rgba(255,255,255,.24), rgba(255,255,255,.055) 42%, rgba(235,244,250,.14) 76%, rgba(255,255,255,.28)),
+        rgba(238,246,250,.11);
       color: #171717;
       box-shadow:
-        0 20px 42px rgba(15,18,22,.24),
-        0 5px 13px rgba(15,18,22,.11),
-        inset 0 1.5px 0 rgba(255,255,255,.98),
-        inset 0 8px 14px rgba(255,255,255,.18),
-        inset 0 -9px 16px rgba(18,27,36,.15),
-        inset 1px 0 0 rgba(255,255,255,.38),
-        inset -1px 0 0 rgba(255,255,255,.22);
-      backdrop-filter: blur(34px) saturate(190%) brightness(1.08) contrast(1.04);
-      -webkit-backdrop-filter: blur(34px) saturate(190%) brightness(1.08) contrast(1.04);
+        0 20px 42px rgba(8,12,16,.2),
+        0 6px 14px rgba(8,12,16,.11),
+        inset 0 1px 0 rgba(255,255,255,.98),
+        inset 0 10px 18px rgba(255,255,255,.14),
+        inset 0 -12px 20px rgba(25,35,42,.12),
+        inset 1px 0 0 rgba(155,219,255,.42),
+        inset -1px 0 0 rgba(255,167,151,.3);
+      backdrop-filter: blur(24px) saturate(175%) brightness(1.06) contrast(.94);
+      -webkit-backdrop-filter: blur(24px) saturate(175%) brightness(1.06) contrast(.94);
       pointer-events: auto;
       transform: translateZ(0);
       transition: width .42s cubic-bezier(.22,1,.36,1), padding .42s cubic-bezier(.22,1,.36,1), box-shadow .3s ease;
     }
     .nav::before {
-      /* Refraction ring: a bright gradient edge that fakes light bending
-         around the rim of the glass — strongest at the top, catching the
-         lower edge too, like a real frosted-glass pill. */
       content: "";
       position: absolute;
-      z-index: 0;
+      z-index: 1;
       inset: 0;
       border-radius: inherit;
-      padding: 1.5px;
-      background: linear-gradient(155deg, rgba(255,255,255,1) 0%, rgba(255,255,255,.58) 22%, rgba(255,255,255,.10) 47%, rgba(111,132,148,.24) 67%, rgba(255,255,255,.76) 100%);
+      padding: 1.25px;
+      background: conic-gradient(from 205deg at var(--glass-px) var(--glass-py), rgba(117,214,255,.84), rgba(255,255,255,.98) 17%, rgba(255,255,255,.14) 37%, rgba(255,143,126,.66) 58%, rgba(255,255,255,.95) 77%, rgba(117,214,255,.84));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       mask-composite: exclude;
+      opacity: .86;
       pointer-events: none;
     }
     .nav::after {
       content: "";
       position: absolute;
-      z-index: 0;
-      inset: 2px;
+      z-index: 1;
+      inset: 1px;
       border-radius: inherit;
       background:
-        linear-gradient(112deg, transparent 10%, rgba(255,255,255,.23) 33%, rgba(255,255,255,.04) 52%, transparent 72%),
-        linear-gradient(180deg, rgba(255,255,255,.30) 0, transparent 28%);
-      opacity: .78;
+        radial-gradient(90px 34px at var(--glass-px) var(--glass-py), rgba(255,255,255,.7), rgba(255,255,255,.15) 42%, transparent 72%),
+        linear-gradient(180deg, rgba(255,255,255,.3) 0, transparent 35%, rgba(134,184,214,.1) 72%, rgba(255,255,255,.28) 100%);
+      mix-blend-mode: screen;
+      opacity: .84;
       pointer-events: none;
     }
-    .nav > * { position: relative; z-index: 1; }
-    @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-      .nav { background:
-        linear-gradient(112deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,.045) 37%, rgba(255,255,255,.015) 61%, rgba(255,255,255,.10) 100%),
-        linear-gradient(180deg, rgba(255,255,255,.24) 0%, rgba(255,255,255,.075) 49%, rgba(18,24,31,.10) 100%); }
-    }
+    .nav-liquid-canvas { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; border-radius: inherit; pointer-events: none; opacity: .96; }
+    .nav > *:not(.nav-liquid-canvas) { position: relative; z-index: 2; }
     .nav-brand {
       display: inline-flex;
       align-items: center;
@@ -219,7 +216,9 @@
       font-weight: 900;
       letter-spacing: .09em;
     }
-    .nav-avatar { width: 34px; height: 34px; flex: 0 0 auto; overflow: visible; }
+    .nav-avatar { position: relative; width: 34px; height: 34px; display: inline-flex; flex: 0 0 auto; overflow: hidden; border: 1px solid rgba(255,255,255,.92); border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1px rgba(23,23,23,.08), 0 2px 7px rgba(23,23,23,.16); }
+    .nav-avatar-image { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; transform: scale(1.06); }
+    .avatar-reactive { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
     .avatar-pupils { transform-box: fill-box; transform-origin: center; will-change: transform; }
     .avatar-lids { opacity: 0; transform-box: fill-box; transform-origin: center; transition: opacity .12s ease; }
     .nav-avatar.is-blinking .avatar-lids { opacity: 1; }
@@ -397,7 +396,7 @@
       font-weight: 600;
       line-height: 1.18;
       letter-spacing: -.045em;
-      text-shadow: 0 10px 30px rgba(122,35,7,.2);
+      text-shadow: 0 3px 18px rgba(122,35,7,.26);
     }
     .hero-kicker {
       width: max-content;
@@ -439,6 +438,7 @@
       overflow: visible;
       margin: -.46em -.42em -.58em;
       padding: .46em .42em .58em;
+      transform: translate3d(72%, 0, 0);
     }
     .hero-kicker-mask {
       margin: calc(34px - .62em) -.24em -.54em;
@@ -568,17 +568,18 @@
     .client-logo-marquee:hover .client-logo-track { animation-play-state: paused; }
     .client-logo-set { display: flex; flex: 0 0 auto; align-items: center; gap: clamp(26px, 4vw, 58px); padding-right: clamp(26px, 4vw, 58px); }
     .client-logo {
+      position: relative;
       width: clamp(112px, 12vw, 142px);
-      height: 62px;
+      height: 72px;
       display: grid;
       place-items: center;
       flex: 0 0 auto;
-      padding: 9px 12px;
+      overflow: hidden;
       border: 1px solid rgba(23,23,23,.08);
       border-radius: 7px;
       background: #fff;
     }
-    .client-logo img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(1); opacity: .7; transition: filter .3s ease, opacity .3s ease; }
+    .client-logo img { width: 100%; height: 100%; max-width: none; padding: 7px 10px; object-fit: contain; object-position: center; filter: grayscale(1); opacity: .7; transition: filter .3s ease, opacity .3s ease; }
     .client-logo:hover img { filter: grayscale(0); opacity: 1; }
     @keyframes clientLogoTicker { to { transform: translate3d(-50%,0,0); } }
 
@@ -1195,57 +1196,111 @@
     .physics-reset.is-visible { opacity: 1; transform: translate3d(0,0,0); pointer-events: auto; }
     .physics-reset:hover, .physics-reset:focus-visible { background: var(--accent); outline: none; }
     .contact-thumb {
-      --tilt-x: 0deg;
-      --tilt-y: 0deg;
-      --sheen-x: 0px;
-      --sheen-y: 0px;
       position: relative;
       overflow: hidden;
-      padding: 9px;
-      border: 1px solid rgba(255,255,255,.85);
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.22);
       border-radius: 24px;
-      background: rgba(255,255,255,.12);
-      transform: perspective(900px) rotateZ(5deg) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-      transform-style: preserve-3d;
-      box-shadow: 0 30px 60px rgba(0,0,0,.34), 0 0 34px rgba(242,86,35,.12);
-      will-change: transform;
+      background: #242424;
+      transform: rotate(5deg);
+      box-shadow: 0 30px 60px rgba(0,0,0,.38), 0 0 34px rgba(242,86,35,.12);
     }
-    .contact-thumb::after {
-      content: "";
-      position: absolute;
-      z-index: 2;
-      inset: -25%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,.34), rgba(255,255,255,.08) 24%, transparent 55%);
-      opacity: var(--sheen-opacity, 0);
-      transform: translate3d(var(--sheen-x), var(--sheen-y), 0);
-      pointer-events: none;
-      mix-blend-mode: screen;
-      will-change: opacity, transform;
-    }
-    .contact-thumb img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: 50% 24%; border-radius: 16px; transform: translateZ(16px) scale(1.015); }
+    .contact-thumb img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: 50% 24%; border-radius: 15px; }
     .social-row { position: relative; z-index: 2; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 30px; margin-top: 88px; padding-bottom: 34px; border-bottom: 1px solid rgba(255,255,255,.38); }
     .social-label { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; opacity: .78; }
     .social-handle { width: max-content; color: white; text-decoration: none; font-size: clamp(1.1rem, 2.4vw, 1.9rem); font-weight: 800; border-bottom: 1px solid rgba(255,255,255,.5); transition: color .2s ease, border-color .2s ease; }
     .social-handle:hover, .social-handle:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
     .social-icons { display: flex; gap: 10px; }
-    .icon-link { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; background: white; color: #171717; transition: transform .2s ease, color .2s ease; }
-    .icon-link:hover, .icon-link:focus-visible { color: var(--accent); transform: translateY(-4px) rotate(-5deg); outline: 2px solid var(--accent); outline-offset: 3px; }
-    .icon-link svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-link {
+      --glass-x: 36%;
+      --glass-y: 18%;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.68);
+      border-radius: 50%;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.42), rgba(255,255,255,.1) 48%, rgba(171,215,240,.16)),
+        rgba(255,255,255,.1);
+      color: #fff;
+      box-shadow:
+        0 13px 28px rgba(0,0,0,.28),
+        inset 0 1px 0 rgba(255,255,255,.98),
+        inset 0 -7px 12px rgba(6,13,18,.18),
+        inset 1px 0 0 rgba(126,215,255,.42),
+        inset -1px 0 0 rgba(255,157,139,.3);
+      backdrop-filter: blur(18px) saturate(175%) brightness(1.08);
+      -webkit-backdrop-filter: blur(18px) saturate(175%) brightness(1.08);
+      transition: transform .26s cubic-bezier(.34,1.45,.44,1), color .2s ease, box-shadow .26s ease;
+    }
+    .icon-link::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 1px;
+      border-radius: inherit;
+      background:
+        radial-gradient(29px 20px at var(--glass-x) var(--glass-y), rgba(255,255,255,.76), rgba(255,255,255,.12) 48%, transparent 76%),
+        linear-gradient(180deg, rgba(255,255,255,.22), transparent 52%, rgba(133,200,236,.12));
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .icon-link:hover, .icon-link:focus-visible { color: white; transform: translateY(-4px) rotate(-5deg); box-shadow: 0 18px 34px rgba(0,0,0,.32), 0 0 0 2px rgba(242,86,35,.78), inset 0 1px 0 rgba(255,255,255,.98); outline: none; }
+    .icon-link svg { position: relative; z-index: 1; width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 4px rgba(0,0,0,.25)); }
     .footer-bottom { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 28px; font-size: 12px; font-weight: 700; }
-    .whatsapp-cta { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 11px; margin-top: 38px; padding: 15px 26px; border-radius: 999px; background: #25d366; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 800; letter-spacing: -.01em; box-shadow: 0 14px 32px rgba(37,211,102,.35), inset 0 1px 0 rgba(255,255,255,.35); transition: transform .25s cubic-bezier(.34,1.45,.44,1), box-shadow .25s ease, background .25s ease; }
+    .whatsapp-cta {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      margin-top: 38px;
+      padding: 15px 26px;
+      border: 1px solid #25d366;
+      border-radius: 999px;
+      background: #25d366;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      box-shadow: 0 14px 30px rgba(10,117,51,.3);
+      transition: transform .25s cubic-bezier(.34,1.45,.44,1), box-shadow .25s ease, background .25s ease;
+    }
     .whatsapp-cta svg { width: 22px; height: 22px; fill: currentColor; flex: 0 0 auto; }
-    .whatsapp-cta:hover, .whatsapp-cta:focus-visible { background: #1fb857; transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px rgba(37,211,102,.42), inset 0 1px 0 rgba(255,255,255,.35); outline: none; }
-    .whatsapp-float { position: fixed; z-index: 90; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); width: 58px; height: 58px; display: grid; place-items: center; border-radius: 50%; background: #25d366; color: #ffffff; text-decoration: none; box-shadow: 0 14px 34px rgba(23,23,23,.30), 0 6px 18px rgba(37,211,102,.45), inset 0 1px 0 rgba(255,255,255,.35); animation: waFloatIn .7s cubic-bezier(.34,1.45,.44,1) 1.4s backwards; transition: transform .25s cubic-bezier(.34,1.45,.44,1), background .25s ease; }
-    .whatsapp-float svg { width: 29px; height: 29px; fill: currentColor; }
-    .whatsapp-float:hover, .whatsapp-float:focus-visible { background: #1fb857; transform: translateY(-3px) scale(1.06); outline: none; }
+    .whatsapp-cta:hover, .whatsapp-cta:focus-visible { background: #20bd5a; transform: translateY(-3px) scale(1.02); box-shadow: 0 19px 38px rgba(10,117,51,.4); outline: none; }
+    .whatsapp-float {
+      position: fixed;
+      z-index: 90;
+      right: max(20px, env(safe-area-inset-right));
+      bottom: max(20px, env(safe-area-inset-bottom));
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #25d366;
+      border-radius: 50%;
+      background: #25d366;
+      color: #ffffff;
+      text-decoration: none;
+      box-shadow: 0 16px 36px rgba(23,23,23,.3), 0 7px 20px rgba(19,152,70,.36);
+      animation: waFloatIn .7s cubic-bezier(.34,1.45,.44,1) 1.4s backwards;
+      transition: transform .25s cubic-bezier(.34,1.45,.44,1), background .25s ease, box-shadow .25s ease;
+    }
+    .whatsapp-float svg { width: 29px; height: 29px; fill: currentColor; filter: drop-shadow(0 1px 4px rgba(0,0,0,.2)); }
+    .whatsapp-float:hover, .whatsapp-float:focus-visible { background: #20bd5a; transform: translateY(-3px) scale(1.06); box-shadow: 0 20px 42px rgba(23,23,23,.32), 0 9px 24px rgba(19,152,70,.44); outline: none; }
     @keyframes waFloatIn { from { opacity: 0; transform: translate3d(0,16px,0) scale(.85); } to { opacity: 1; transform: translate3d(0,0,0) scale(1); } }
     @media (max-width: 720px) {
       .whatsapp-float { width: 54px; height: 54px; right: 16px; bottom: 16px; }
       .whatsapp-cta { font-size: 15px; padding: 14px 22px; }
       .client-strip-inner { min-height: 146px; grid-template-columns: 1fr; gap: 15px; padding-block: 24px; }
       .client-logo-marquee { width: calc(100% + 24px); margin-left: -12px; }
-      .client-logo { width: 108px; height: 54px; }
+      .client-logo { width: 116px; height: 68px; }
+      .client-logo img { padding: 6px 8px; }
       .client-logo-set { gap: 20px; padding-right: 20px; }
     }
     .made { padding: 10px 14px; border-radius: 999px; background: white; color: #171717; }
@@ -1512,7 +1567,12 @@
        stacked and the 16:9 photo is shown whole, never portrait-cropped.
        Sizes are in vw so the whole lockup scales with the frame. */
     @media (max-width: 720px) and (orientation: portrait) {
+      .nav-wrap { top: max(8px, env(safe-area-inset-top)); }
+      .nav { width: calc(100% - 24px); }
       .hero { min-height: 0; height: 56.25vw; }
+      .hero-copy { padding-top: 2vw; }
+      .hello { margin-top: 0; }
+      .hero-lockup { margin-top: 1.15vw; }
       .hero-media::before {
         background: linear-gradient(90deg,
           #f25623 0%,
@@ -1525,10 +1585,10 @@
           rgba(242,86,35,.07) 79%,
           rgba(242,86,35,0) 88%);
       }
-      .hero-inner { width: min(var(--max), calc(100% - 7.2vw)); min-height: 0; padding: 12.5vw 0 2vw; }
+      .hero-inner { width: min(var(--max), calc(100% - 7.2vw)); min-height: 0; padding: 17vw 0 1.2vw; }
       .hero-copy { width: 66vw; max-width: none; }
-      .hello { font-size: 2.7vw; min-height: 6vw; padding: 1.4vw 2.8vw; gap: 1.6vw; }
-      .hero-lockup { margin-top: 2.2vw; }
+      .hello { font-size: 2.7vw; min-height: 6vw; padding: 1.25vw 2.8vw; gap: 1.6vw; }
+      .hero-lockup { margin-top: 1.15vw; }
       .hero-title { font-size: 8.6vw; line-height: 1.08; letter-spacing: -.08em; }
       .hero-script { font-size: 8.3vw; line-height: 1.18; margin-left: 36%; }
       .hero-kicker-mask { margin-top: calc(2vw - .62em); }
@@ -1576,44 +1636,24 @@
   </div>
   <div class="nav-wrap">
     <nav class="nav" aria-label="Primary navigation">
+      <canvas class="nav-liquid-canvas" id="nav-liquid-canvas" aria-hidden="true"></canvas>
       <a class="nav-brand" href="#top" aria-label="Arjun Karavadara, back to top">
-        <svg class="nav-avatar" id="nav-avatar" viewBox="0 0 64 64" role="img" aria-label="Reactive cartoon portrait of Arjun Karavadara">
-          <defs>
-            <linearGradient id="avatar-bg" x1="8" y1="3" x2="55" y2="62" gradientUnits="userSpaceOnUse"><stop stop-color="#ffb16f"/><stop offset=".48" stop-color="#f25623"/><stop offset="1" stop-color="#a52d11"/></linearGradient>
-            <linearGradient id="avatar-skin" x1="22" y1="14" x2="45" y2="53" gradientUnits="userSpaceOnUse"><stop stop-color="#d79a6f"/><stop offset=".55" stop-color="#b9744e"/><stop offset="1" stop-color="#8b4e35"/></linearGradient>
-            <filter id="avatar-shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#541806" flood-opacity=".34"/></filter>
-            <clipPath id="avatar-clip"><circle cx="32" cy="32" r="29.5"/></clipPath>
-          </defs>
-          <circle cx="32" cy="32" r="30.5" fill="url(#avatar-bg)" stroke="rgba(255,255,255,.9)" stroke-width="2"/>
-          <g clip-path="url(#avatar-clip)" filter="url(#avatar-shadow)">
-            <path d="M9 66c1-15 10-22 22-23 13 0 23 7 25 23" fill="#171717"/>
-            <path d="M25 39h15v11c-4 4-11 4-15 0z" fill="#9a5d42"/>
-            <path d="M18 23c0-10 6-16 16-16 11 0 17 7 16 19l-2 10c-2 10-8 14-15 14-8 0-14-6-16-17z" fill="url(#avatar-skin)"/>
-            <path d="M17 24c-2-9 4-19 14-20 7-1 9 2 15 1 6 4 8 10 5 18-4-4-7-7-8-12-4 6-13 9-26 13z" fill="#111419"/>
-            <path d="M18 15c4-8 12-11 20-9 3 1 7 1 9-1-2 6-9 9-17 9-5 0-9 1-12 3z" fill="#252a31" opacity=".9"/>
-            <path d="M20 35c4 1 7 4 9 8 5 3 11 1 15-4 2-3 3-7 3-12 3 8 1 18-5 22-8 6-20 1-22-14z" fill="#30201c" opacity=".96"/>
-            <path d="M26 42c5 3 10 3 15-1-2 7-12 9-15 1z" fill="#1b1311" opacity=".7"/>
-            <g class="avatar-eye-whites">
-              <ellipse cx="27" cy="28.8" rx="4.2" ry="3.4" fill="#fff8ee"/>
-              <ellipse cx="41.2" cy="28.8" rx="4.2" ry="3.4" fill="#fff8ee"/>
-            </g>
+        <span class="nav-avatar" id="nav-avatar" role="img" aria-label="Reactive 3D avatar of Arjun Karavadara">
+          <img class="nav-avatar-image" src="arjun-nav-avatar-white.png" alt="" />
+          <svg class="avatar-reactive" viewBox="0 0 34 34" aria-hidden="true">
             <g class="avatar-pupils" id="avatar-pupils">
-              <circle cx="27" cy="29" r="1.65" fill="#171717"/><circle cx="41.2" cy="29" r="1.65" fill="#171717"/>
-              <circle cx="26.45" cy="28.45" r=".46" fill="#fff"/><circle cx="40.65" cy="28.45" r=".46" fill="#fff"/>
+              <circle cx="14.1" cy="14.4" r=".75" fill="#111"/><circle cx="20.9" cy="14.4" r=".75" fill="#111"/>
+              <circle cx="13.86" cy="14.15" r=".18" fill="#fff"/><circle cx="20.66" cy="14.15" r=".18" fill="#fff"/>
             </g>
-            <g class="avatar-lids" id="avatar-lids"><path d="M22.8 28.8q4.2-3.5 8.4 0-4.2 2-8.4 0z" fill="#a9694a"/><path d="M37 28.8q4.2-3.5 8.4 0-4.2 2-8.4 0z" fill="#a9694a"/></g>
-            <path class="avatar-brow avatar-brow-left" d="M22.5 24.6q4-2.1 8.4.1" fill="none" stroke="#201612" stroke-width="1.8" stroke-linecap="round"/>
-            <path class="avatar-brow avatar-brow-right" d="M37.3 24.7q4.2-2.1 8.2.2" fill="none" stroke="#201612" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M34 29.5l-1.2 6 3.1.3" fill="none" stroke="#84472f" stroke-width="1.1" stroke-linecap="round"/>
-            <g class="avatar-mouths">
-              <path class="avatar-mouth avatar-mouth-friendly" d="M28.5 38.7q5.4 3.8 10.7 0" fill="none" stroke="#5d2d25" stroke-width="1.7" stroke-linecap="round"/>
-              <path class="avatar-mouth avatar-mouth-woo" d="M29.1 37.5q5-3.4 10 0v2.7q-5 4.8-10 0z" fill="#4e2221"/><path class="avatar-mouth avatar-mouth-woo" d="M31.1 41q3 .9 5.9-.1" fill="none" stroke="#e98b79" stroke-width="1.2"/>
-              <path class="avatar-mouth avatar-mouth-focus" d="M29 40q5 1.1 10-.2" fill="none" stroke="#4e2922" stroke-width="1.6" stroke-linecap="round"/>
-              <path class="avatar-mouth avatar-mouth-celebrate" d="M27.8 37.5q6.4 6.5 12.7 0-1 8-6.2 8t-6.5-8z" fill="#fff7e9" stroke="#5d2d25" stroke-width="1"/>
-            </g>
-            <g class="avatar-confetti" aria-hidden="true"><path d="M12 18l3-2M51 14l-2.4 3M53 33l3 .5M12 36l-3 1" stroke="#ffd36f" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="10" r="1.4" fill="#fff2b2"/><circle cx="54" cy="23" r="1.4" fill="#fff2b2"/></g>
-          </g>
-        </svg>
+            <g class="avatar-lids"><path d="M11.8 14.4q2.3-1.8 4.6 0-2.3 1.2-4.6 0z" fill="#e7b8a5"/><path d="M18.6 14.4q2.3-1.8 4.6 0-2.3 1.2-4.6 0z" fill="#e7b8a5"/></g>
+            <path class="avatar-brow avatar-brow-left" d="M11.8 11.7q2.2-1 4.5 0" fill="none" stroke="#161616" stroke-width=".7" stroke-linecap="round"/>
+            <path class="avatar-brow avatar-brow-right" d="M18.8 11.7q2.2-1 4.4 0" fill="none" stroke="#161616" stroke-width=".7" stroke-linecap="round"/>
+            <path class="avatar-mouth avatar-mouth-woo" d="M15.4 21.2q2.1-1.5 4.2 0v1.2q-2.1 2-4.2 0z" fill="#542922"/>
+            <path class="avatar-mouth avatar-mouth-focus" d="M15.2 22.2q2.3.5 4.6-.1" fill="none" stroke="#3b211d" stroke-width=".8" stroke-linecap="round"/>
+            <path class="avatar-mouth avatar-mouth-celebrate" d="M15 21.2q2.6 2.8 5.1 0-.4 3-2.5 3t-2.6-3z" fill="#fff" stroke="#542922" stroke-width=".45"/>
+            <g class="avatar-confetti"><path d="M6 9l2-1M27 8l-1 2M28 18l2 .5M5 19l-2 .6" stroke="#f25623" stroke-width="1" stroke-linecap="round"/></g>
+          </svg>
+        </span>
         <span>ARJUN KARAVADARA</span>
       </a>
       <div class="nav-links">
@@ -2350,6 +2390,148 @@
     }());
   </script>
   <script>
+    /* GPU liquid-glass rim for the floating navigation. The shader is a compact,
+       purpose-built adaptation of the refraction / dispersion / Fresnel approach
+       demonstrated by iyinchao/liquid-glass-studio (MIT). CSS backdrop-filter remains
+       the real blurred backdrop; WebGL adds the physical edge response. */
+    (function () {
+      var liquidSurfaces = [document.getElementById('nav-liquid-canvas')].filter(Boolean);
+
+      liquidSurfaces.forEach(function (canvas) {
+      var nav = canvas.parentElement;
+      if (!nav) return;
+
+      var gl = canvas.getContext('webgl2', { alpha: true, antialias: true, premultipliedAlpha: true });
+      if (!gl) return;
+
+      var vertexSource = '#version 300 es\n' +
+        'layout(location=0) in vec2 aPosition;\n' +
+        'void main(){ gl_Position=vec4(aPosition,0.0,1.0); }';
+      var fragmentSource = '#version 300 es\n' +
+        'precision highp float;\n' +
+        'uniform vec2 uResolution;\n' +
+        'uniform vec2 uPointer;\n' +
+        'uniform float uTime;\n' +
+        'out vec4 fragColor;\n' +
+        'float roundedBox(vec2 p, vec2 b, float r){ vec2 q=abs(p)-b+r; return min(max(q.x,q.y),0.0)+length(max(q,0.0))-r; }\n' +
+        'void main(){\n' +
+        '  vec2 p=gl_FragCoord.xy-uResolution*0.5;\n' +
+        '  vec2 halfSize=max(vec2(2.0),uResolution*0.5-vec2(1.6));\n' +
+        '  float radius=max(2.0,min(halfSize.y-0.2,26.0));\n' +
+        '  float d=roundedBox(p,halfSize,radius);\n' +
+        '  float inside=1.0-smoothstep(-0.2,1.3,d);\n' +
+        '  float e=0.75;\n' +
+        '  vec2 n=normalize(vec2(roundedBox(p+vec2(e,0.0),halfSize,radius)-roundedBox(p-vec2(e,0.0),halfSize,radius),roundedBox(p+vec2(0.0,e),halfSize,radius)-roundedBox(p-vec2(0.0,e),halfSize,radius))+vec2(0.0001));\n' +
+        '  vec2 light=normalize(vec2(-0.62,0.78)+uPointer*0.42);\n' +
+        '  float fresnel=exp(-abs(d+1.1)*0.72)*inside;\n' +
+        '  float refractBand=exp(-abs(d+4.0+sin((p.x+p.y*0.42)*0.075+uTime*0.42)*0.55)*0.82)*inside;\n' +
+        '  float glare=pow(max(dot(n,light),0.0),7.0)*exp(-abs(d+0.8)*0.38)*inside;\n' +
+        '  float reverseGlare=pow(max(dot(n,-light),0.0),9.0)*exp(-abs(d+1.4)*0.5)*inside;\n' +
+        '  float redFringe=exp(-abs(d+1.8+n.x*1.25)*1.15)*inside;\n' +
+        '  float blueFringe=exp(-abs(d+1.8-n.x*1.25)*1.15)*inside;\n' +
+        '  float softFill=inside*(0.024+0.012*sin(p.x*0.026-p.y*0.018+uTime*0.18));\n' +
+        '  vec3 color=vec3(1.0)*softFill+vec3(0.55,0.88,1.0)*blueFringe*0.18+vec3(1.0,0.58,0.46)*redFringe*0.14+vec3(0.92,0.98,1.0)*fresnel*0.2+vec3(1.0)*glare*0.72+vec3(0.66,0.86,1.0)*reverseGlare*0.2+vec3(0.86,0.95,1.0)*refractBand*0.08;\n' +
+        '  float alpha=clamp(softFill*1.3+fresnel*0.12+refractBand*0.08+glare*0.46+reverseGlare*0.15+redFringe*0.055+blueFringe*0.07,0.0,0.74);\n' +
+        '  fragColor=vec4(color,alpha);\n' +
+        '}';
+
+      function compile(type, source) {
+        var shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      var vertex = compile(gl.VERTEX_SHADER, vertexSource);
+      var fragment = compile(gl.FRAGMENT_SHADER, fragmentSource);
+      if (!vertex || !fragment) return;
+      var program = gl.createProgram();
+      gl.attachShader(program, vertex);
+      gl.attachShader(program, fragment);
+      gl.linkProgram(program);
+      gl.deleteShader(vertex);
+      gl.deleteShader(fragment);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        gl.deleteProgram(program);
+        return;
+      }
+
+      var buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+      gl.useProgram(program);
+      gl.enableVertexAttribArray(0);
+      gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+      var resolutionLocation = gl.getUniformLocation(program, 'uResolution');
+      var pointerLocation = gl.getUniformLocation(program, 'uPointer');
+      var timeLocation = gl.getUniformLocation(program, 'uTime');
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var target = { x: 0, y: .55 };
+      var current = { x: 0, y: .55 };
+      var start = performance.now();
+      var frame = 0;
+
+      function resize() {
+        var rect = nav.getBoundingClientRect();
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var width = Math.max(1, Math.round(rect.width * dpr));
+        var height = Math.max(1, Math.round(rect.height * dpr));
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+          gl.viewport(0, 0, width, height);
+        }
+      }
+
+      function draw(now) {
+        resize();
+        current.x += (target.x - current.x) * .075;
+        current.y += (target.y - current.y) * .075;
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(program);
+        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        gl.uniform2f(pointerLocation, current.x, current.y);
+        gl.uniform1f(timeLocation, reducedMotion.matches ? 0 : (now - start) / 1000);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        if (!reducedMotion.matches && !document.hidden) frame = requestAnimationFrame(draw);
+      }
+
+      function setPointer(event) {
+        var rect = nav.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        var x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+        var y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+        target.x = x * 2 - 1;
+        target.y = (1 - y) * 2 - 1;
+        nav.style.setProperty('--glass-px', (x * 100).toFixed(1) + '%');
+        nav.style.setProperty('--glass-py', (y * 100).toFixed(1) + '%');
+      }
+
+      nav.addEventListener('pointermove', setPointer, { passive: true });
+      nav.addEventListener('pointerleave', function () {
+        target.x = 0;
+        target.y = .55;
+        nav.style.setProperty('--glass-px', '50%');
+        nav.style.setProperty('--glass-py', '16%');
+      }, { passive: true });
+      window.addEventListener('resize', resize, { passive: true });
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden && !reducedMotion.matches && !frame) frame = requestAnimationFrame(draw);
+      });
+      if ('ResizeObserver' in window) new ResizeObserver(resize).observe(nav);
+      frame = requestAnimationFrame(draw);
+      });
+    }());
+  </script>
+  <script>
     (function () {
       var nav = document.querySelector('.nav');
       var navLinks = nav && nav.querySelector('.nav-links');
@@ -2380,61 +2562,23 @@
     }());
   </script>
   <script>
+    /* Move the specular highlight across the retained glass social controls. */
     (function () {
-      var portrait = document.querySelector('.contact-thumb');
       var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-      var hoverPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-      if (!portrait || reducedMotion.matches || !hoverPointer.matches) return;
-
-      var current = { x: 0, y: 0, sheenX: 0, sheenY: 0, sheen: 0 };
-      var target = { x: 0, y: 0, sheenX: 0, sheenY: 0, sheen: 0 };
-      var frame = 0;
-
-      function animatePortrait() {
-        var ease = 0.12;
-        current.x += (target.x - current.x) * ease;
-        current.y += (target.y - current.y) * ease;
-        current.sheenX += (target.sheenX - current.sheenX) * ease;
-        current.sheenY += (target.sheenY - current.sheenY) * ease;
-        current.sheen += (target.sheen - current.sheen) * 0.1;
-
-        portrait.style.setProperty('--tilt-x', current.x.toFixed(3) + 'deg');
-        portrait.style.setProperty('--tilt-y', current.y.toFixed(3) + 'deg');
-        portrait.style.setProperty('--sheen-x', current.sheenX.toFixed(2) + 'px');
-        portrait.style.setProperty('--sheen-y', current.sheenY.toFixed(2) + 'px');
-        portrait.style.setProperty('--sheen-opacity', current.sheen.toFixed(3));
-
-        var moving = Math.abs(target.x - current.x) > 0.01 ||
-          Math.abs(target.y - current.y) > 0.01 ||
-          Math.abs(target.sheenX - current.sheenX) > 0.1 ||
-          Math.abs(target.sheenY - current.sheenY) > 0.1 ||
-          Math.abs(target.sheen - current.sheen) > 0.005;
-        frame = moving ? requestAnimationFrame(animatePortrait) : 0;
-      }
-
-      function queuePortrait() {
-        if (!frame) frame = requestAnimationFrame(animatePortrait);
-      }
-
-      portrait.addEventListener('pointermove', function (event) {
-        var rect = portrait.getBoundingClientRect();
-        var px = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - 0.5) * 2));
-        var py = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2));
-        target.x = -py * 9;
-        target.y = px * 10;
-        target.sheenX = px * 42;
-        target.sheenY = py * 48;
-        target.sheen = 0.72;
-        queuePortrait();
-      });
-
-      portrait.addEventListener('pointerleave', function () {
-        target.x = 0;
-        target.y = 0;
-        target.sheenX = 0;
-        target.sheenY = 0;
-        target.sheen = 0;
-        queuePortrait();
+      if (reducedMotion.matches) return;
+      Array.prototype.forEach.call(document.querySelectorAll('.icon-link'), function (element) {
+        element.addEventListener('pointermove', function (event) {
+          var rect = element.getBoundingClientRect();
+          if (!rect.width || !rect.height) return;
+          var x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+          var y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+          element.style.setProperty('--glass-x', (x * 100).toFixed(1) + '%');
+          element.style.setProperty('--glass-y', (y * 100).toFixed(1) + '%');
+        }, { passive: true });
+        element.addEventListener('pointerleave', function () {
+          element.style.removeProperty('--glass-x');
+          element.style.removeProperty('--glass-y');
+        }, { passive: true });
       });
     }());
   </script>
@@ -3038,6 +3182,8 @@
       var workVisible = false;
       var footerVisible = false;
       var videoPlaying = false;
+      var tapCelebrate = false;
+      var tapTimer = 0;
 
       function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
 
@@ -3063,7 +3209,7 @@
       }
 
       function updateReaction() {
-        var state = footerVisible ? 'celebrate' : (videoPlaying ? 'woo' : (workVisible ? 'focus' : 'friendly'));
+        var state = (tapCelebrate || footerVisible) ? 'celebrate' : (videoPlaying ? 'woo' : (workVisible ? 'focus' : 'friendly'));
         avatar.setAttribute('data-reaction', state);
       }
 
@@ -3092,6 +3238,19 @@
         var touch = event.touches && event.touches[0];
         if (touch) setGaze(touch.clientX, touch.clientY);
       }, { passive: true });
+      avatar.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        window.clearTimeout(tapTimer);
+        tapCelebrate = true;
+        updateReaction();
+        avatar.classList.add('is-blinking');
+        window.setTimeout(function () { avatar.classList.remove('is-blinking'); }, 135);
+        tapTimer = window.setTimeout(function () {
+          tapCelebrate = false;
+          updateReaction();
+        }, 1100);
+      });
 
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (entries) {
